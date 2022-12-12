@@ -63,15 +63,19 @@ button_stop.place(x = 614, y = 500, width = 100, height = 60)
 
 
 # <----------View anckets-------------->
-quantity_anket=3
+quantity_anket=2
 count=0
 coordinate_y=6
+Name_ankets=["Sirena","Anjelika"]
 if quantity_anket > 0:
     for i in range(quantity_anket):
-        view_ankets = Frame(root, width = 220, height = 60, highlightbackground = "#6ec261", highlightthickness = 3,
-                             background = '#646363')
-        view_ankets.place(x = 7, y = coordinate_y)
+        bd_color = Frame(root, highlightbackground = "#6ec261",highlightthickness = 2, bd=0)
+        view_ankets = Button(bd_color,text=str(Name_ankets[int(count)]), background = "#646363", activebackground="#646363")
+        view_ankets.config(font = ('Comic Sans MS', 15),fg = 'white')
+        view_ankets.place(width = 220,height = 60)
+        bd_color.place(x = 7, y = coordinate_y , width = 224,height = 64)
         coordinate_y += 70
+        count+=1
 
 # <----------View balance-------------->
 
