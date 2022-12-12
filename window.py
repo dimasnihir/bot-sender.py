@@ -49,7 +49,7 @@ edit.place(x = 265,y = 75, width = 500, height = 400)
 # <----------Button Start-------------->
 button_start_images = PhotoImage(file = ("pictures/button_start.png"))
 button_start = Button(root, image = button_start_images)
-button_start.config(background = "#2c2c2c")
+button_start.config(background = "#2c2c2c", activebackground="#2c2c2c")
 button_start["border"] = 0
 button_start.place(x = 314, y = 500, width = 100, height = 60)
 
@@ -57,7 +57,7 @@ button_start.place(x = 314, y = 500, width = 100, height = 60)
 # <----------Button Stop-------------->
 button_stop_images = PhotoImage(file = ("pictures/button_stop.png"))
 button_stop = Button(root,image = button_stop_images, command = start_timer)
-button_stop.config(background = "#2c2c2c")
+button_stop.config(background = "#2c2c2c", activebackground="#2c2c2c")
 button_stop["border"] = 0
 button_stop.place(x = 614, y = 500, width = 100, height = 60)
 
