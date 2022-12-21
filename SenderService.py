@@ -7,8 +7,9 @@ from selenium.webdriver.common.keys import Keys
 class SenderService:
     _PAUSE = 2
     _Black_list = []
+    _List = []
     _Turn = []
-    _List_account = []
+    MESSAGES = []
 
     def __init__(self, email, password):
         self.email = email,
@@ -16,15 +17,19 @@ class SenderService:
 
         self.driver = webdriver.Chrome('./driver/chromedriver.exe')
 
+        with open('MESSAGES.txt', 'r') as file:
+            self.MESSAGES = file.read().split('\n')
+            file.close()
+
     def login(self):
         driver = self.driver
         time.sleep(self._PAUSE)
 
         driver.get('https://victoriyaclub.com/')
-        time.sleep(3)
+        time.sleep(2)
 
         driver.find_element(By.XPATH, '//*[@id="index-auth-form"]/div[1]/a[2]').click()
-        time.sleep(3)
+        time.sleep(2)
 
         input_name = driver.find_element(By.XPATH, '//*[@id="index-auth-form"]/div[3]/form/div[1]/input')
         input_pass = driver.find_element(By.XPATH, '//*[@id="index-auth-form"]/div[3]/form/div[2]/input')
@@ -40,40 +45,46 @@ class SenderService:
         balance = driver.find_element(By.XPATH, '//*[@id="profile-text-user-balance"]').text
         online_man = driver.find_element(By.XPATH,
                                          '//*[@id="top-header"]/header/div[3]/nav/ul/li[1]/a/span/span[2]/span').text
-
         return balance
-        time.sleep(100)
-
-    # def scanning(self):
-    #     driver = self.driver
-    #
-    #     driver.find_element(By.XPATH, '//*[@id="top-header"]/header/div[3]/div/a[1]').click()
-    #     time.sleep(3)
-    #     driver.switch_to.window(driver.window_handles[1])
-    #     time.sleep(2)
-    #
-    #     block_accounts = driver.find_element(By.XPATH, '//*[@id="newchat-online-list"]/div[2]')
-    #
-    #     while True:
-    #         for account in block_accounts.find_elements(By.CLASS_NAME, 'item'):
-    #             if 'display: block;' == account.get_attribute('style'):
-    #                 try:
-    #                     account.click()
-    #                     time.sleep(2)
-    #
-    #                 except Exception as err:
-    #                     continue
-    #
-    #                 user_id = account.get_attribute('data-user-id')
-    #                 self._List_account.append(account.get_attribute('data-user-id'))
-    #                 textarea = driver.find_element(By.ID, 'textarea-message-' + user_id)
-    #
-    #                 textarea.send_keys('Hello!')
-    #                 textarea.send_keys(Keys.ENTER)
-    #             break
-    #         print(self._List_account)
 
 
+    def scanning(self):
+        driver = self.driver
+
+        driver.find_element(By.XPATH, '//*[@id="top-header"]/header/div[3]/div/a[1]').click()
+        time.sleep(3)
+        driver.switch_to.window(driver.window_handles[1])
+        time.sleep(2)
+
+        block_accounts = driver.find_element(By.XPATH, '//*[@id="newchat-online-list"]/div[2]')
+
+        while True:
+            time.sleep(3)
+            for account in block_accounts.find_elements(By.CLASS_NAME, 'item'):
+                if account.get_attribute('style') == 'display: block;':
+                    user_id = account.get_attribute('data-user-id')
+
+                    if user_id not in self._List:
+                        self._List.append(user_id)
+                        account.click()
+                        time.sleep(2)
+
+                        try:
+                            textarea = driver.find_element(By.ID, 'textarea-message-' + user_id)
+                            for message in self.MESSAGES:
+                                time.sleep(2)
+                                textarea.send_keys(message)
+                                textarea.send_keys(Keys.ENTER)
+                        except Exception as err:
+                            print('Что-то пошло не по плану')
+                            continue
+                        break
+                    continue
+
+
+Sender = SenderService('lali_pap30@ukr.net', 'Masya1')
+Sender.login()
+Sender.scanning()
 
 
 

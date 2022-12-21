@@ -1,5 +1,8 @@
-import window
-
+import Window
+import SenderService
 
 if "__main__" == __name__:
-    window.root.mainloop()
+    Window.root.mainloop()
+    Sender = SenderService.SenderService('lali_pap30@ukr.net', 'Masya1')
+    Sender.login()
+
