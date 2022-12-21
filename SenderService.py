@@ -7,13 +7,19 @@ from selenium.webdriver.common.keys import Keys
 class SenderService:
     _PAUSE = 2
     _Black_list = []
+    _List = []
     _Turn = []
+    MESSAGES = []
 
     def __init__(self, email, password):
         self.email = email,
         self.password = password
 
         self.driver = webdriver.Chrome('./driver/chromedriver.exe')
+
+        with open('MESSAGES.txt', 'r') as file:
+            self.MESSAGES = file.read().split('\n')
+            file.close()
 
     def login(self):
         driver = self.driver
@@ -44,20 +50,27 @@ class SenderService:
         block_accounts = driver.find_element(By.XPATH, '//*[@id="newchat-online-list"]/div[2]')
 
         while True:
-            print('Обновляем..\n')
             time.sleep(3)
             for account in block_accounts.find_elements(By.CLASS_NAME, 'item'):
                 if account.get_attribute('style') == 'display: block;':
-
-                    account.click()
-                    time.sleep(2)
-
                     user_id = account.get_attribute('data-user-id')
-                    textarea = driver.find_element(By.ID, 'textarea-message-' + user_id)
-                    massage = 'Hello. I am preparing a christmas tree gift for you. For a long time I thought what to give you and decided that the best gift for you will be me. Now I am looking for a suitable box to climb into it)'
-                    textarea.send_keys(massage)
-                    textarea.send_keys(Keys.ENTER)
-                    break
+
+                    if user_id not in self._List:
+                        self._List.append(user_id)
+                        account.click()
+                        time.sleep(2)
+
+                        try:
+                            textarea = driver.find_element(By.ID, 'textarea-message-' + user_id)
+                            for message in self.MESSAGES:
+                                time.sleep(2)
+                                textarea.send_keys(message)
+                                textarea.send_keys(Keys.ENTER)
+                        except Exception as err:
+                            print('Что-то пошло не по плану')
+                            continue
+                        break
+                    continue
 
 
 Sender = SenderService('lali_pap30@ukr.net', 'Masya1')
