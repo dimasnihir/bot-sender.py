@@ -8,6 +8,9 @@ after_id = ''
 
 
 class Window(Tk):
+    def Get_Name(self):
+        name = Sender.getInformation()["Name"]
+        return name
 
     def ThreadSenderStart(self):
         Thread(target=self.SenderStart).start()
@@ -73,10 +76,10 @@ class Window(Tk):
 
 
         # <----------View ancket-------------->
-        quantity_anket = 2
+        quantity_anket = 1
         count = 0
         coordinate_y = 6
-        Name_ankets = ["Sirena","Anjelika"]
+        Name_ankets = 'de'
         if quantity_anket > 0:
             for i in range(quantity_anket):
                 bd_color = Frame(self, highlightbackground="#6ec261", highlightthickness=2, bd=0)

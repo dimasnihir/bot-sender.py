@@ -89,7 +89,7 @@ class SenderService:
 
 Sender = SenderService('lali_pap30@ukr.net', 'Masya1')
 Sender.login()
-print(Sender.getInformation()["Name"])
+
 Sender.scanning()
 
 
