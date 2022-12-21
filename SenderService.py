@@ -1,12 +1,14 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 
 class SenderService:
     _PAUSE = 2
     _Black_list = []
     _Turn = []
+    _List_account = []
 
     def __init__(self, email, password):
         self.email = email,
@@ -42,9 +44,24 @@ class SenderService:
 
         block_accounts = driver.find_element(By.XPATH, '//*[@id="newchat-online-list"]/div[2]')
 
-        for account in block_accounts.find_elements(By.CLASS_NAME, 'item'):
-            print(account.get_attribute('style'))
+        while True:
+            for account in block_accounts.find_elements(By.CLASS_NAME, 'item'):
+                if 'display: block;' == account.get_attribute('style'):
+                    try:
+                        account.click()
+                        time.sleep(2)
 
+                    except Exception as err:
+                        continue
+
+                    user_id = account.get_attribute('data-user-id')
+                    self._List_account.append(account.get_attribute('data-user-id'))
+                    textarea = driver.find_element(By.ID, 'textarea-message-' + user_id)
+
+                    textarea.send_keys('Hello!')
+                    textarea.send_keys(Keys.ENTER)
+                break
+            print(self._List_account)
 
 
 Sender = SenderService('lali_pap30@ukr.net', 'Masya1')
