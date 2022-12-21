@@ -8,7 +8,6 @@ class SenderService:
     _PAUSE = 2
     _Black_list = []
     _Turn = []
-    _List_account = []
 
     def __init__(self, email, password):
         self.email = email,
@@ -21,10 +20,10 @@ class SenderService:
         time.sleep(self._PAUSE)
 
         driver.get('https://victoriyaclub.com/')
-        time.sleep(3)
+        time.sleep(2)
 
         driver.find_element(By.XPATH, '//*[@id="index-auth-form"]/div[1]/a[2]').click()
-        time.sleep(3)
+        time.sleep(2)
 
         input_name = driver.find_element(By.XPATH, '//*[@id="index-auth-form"]/div[3]/form/div[1]/input')
         input_pass = driver.find_element(By.XPATH, '//*[@id="index-auth-form"]/div[3]/form/div[2]/input')
@@ -45,27 +44,25 @@ class SenderService:
         block_accounts = driver.find_element(By.XPATH, '//*[@id="newchat-online-list"]/div[2]')
 
         while True:
+            print('Обновляем..\n')
+            time.sleep(3)
             for account in block_accounts.find_elements(By.CLASS_NAME, 'item'):
-                if 'display: block;' == account.get_attribute('style'):
-                    try:
-                        account.click()
-                        time.sleep(2)
+                if account.get_attribute('style') == 'display: block;':
 
-                    except Exception as err:
-                        continue
+                    account.click()
+                    time.sleep(2)
 
                     user_id = account.get_attribute('data-user-id')
-                    self._List_account.append(account.get_attribute('data-user-id'))
                     textarea = driver.find_element(By.ID, 'textarea-message-' + user_id)
-
-                    textarea.send_keys('Hello!')
+                    massage = 'Hello. I am preparing a christmas tree gift for you. For a long time I thought what to give you and decided that the best gift for you will be me. Now I am looking for a suitable box to climb into it)'
+                    textarea.send_keys(massage)
                     textarea.send_keys(Keys.ENTER)
-                break
-            print(self._List_account)
+                    break
 
 
 Sender = SenderService('lali_pap30@ukr.net', 'Masya1')
 Sender.login()
+
 Sender.scanning()
 
 
