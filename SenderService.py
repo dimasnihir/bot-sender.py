@@ -43,9 +43,14 @@ class SenderService:
     def getInformation(self):
         driver = self.driver
         balance = driver.find_element(By.XPATH, '//*[@id="profile-text-user-balance"]').text
-        online_man = driver.find_element(By.XPATH,
-                                         '//*[@id="top-header"]/header/div[3]/nav/ul/li[1]/a/span/span[2]/span').text
-        return balance
+        get_online_man = driver.find_element(By.XPATH, '//*[@id="top-header"]/header/div[3]/nav/ul/li[1]/a/span/span[2]/span').text
+        online_man = get_online_man.partition(':')[2]
+        get_Name_Anccets = driver.find_element(By.XPATH, '//*[@id="site-content"]/div/div[2]/div[3]/h2').text
+        Name_Anccets = get_Name_Anccets.partition(',')[0]
+        list_information = {'name': Name_Anccets, 'balance': balance, 'online_man': online_man}
+        return list_information
+        time.sleep(2)
+
 
 
     def scanning(self):
@@ -84,6 +89,7 @@ class SenderService:
 
 Sender = SenderService('lali_pap30@ukr.net', 'Masya1')
 Sender.login()
+print(Sender.getInformation()["Name"])
 Sender.scanning()
 
 
