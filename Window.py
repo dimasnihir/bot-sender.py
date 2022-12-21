@@ -3,16 +3,25 @@ from datetime import datetime
 
 temp = 0
 after_id = ''
+
+
 def tick():
-    global temp,after_id
-    after_id = root.after(1000,tick)
+    global temp, after_id
+    after_id = root.after(1000, tick)
     f_temp = datetime.fromtimestamp(temp).strftime("%M:%S")
-    timer.configure(text = (str(f_temp)))
-    temp+=1
+    timer.configure(text=(str(f_temp)))
+    temp += 1
+
+
 def start_timer():
     tick()
+
+
 def stop_timer():
     root.after_cancel(after_id)
+
+# class Window:
+#     _options
 
 
 # <----------Window------------->
@@ -92,7 +101,9 @@ man_online.place(x=15, y=640)
 
 
 # <----------View balance-------------->
-view_balance = Label(root, text="Balance: 99$")
+
+
+view_balance = Label(root, text='balanse')
 view_balance.config(font=('Comic Sans MS', 15), fg="#6ec261", background='#2c2c2c')
 view_balance.place(x=15, y=680)
 
