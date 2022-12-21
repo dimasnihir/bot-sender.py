@@ -1,5 +1,6 @@
 from tkinter import*
 from datetime import datetime
+
 temp = 0
 after_id = ''
 def tick():

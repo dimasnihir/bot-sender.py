@@ -1,6 +1,7 @@
-import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import time
+
 
 
 class SenderService:
@@ -13,8 +14,11 @@ class SenderService:
         self.password = password
 
         self.driver = webdriver.Chrome('./driver/chromedriver.exe')
+        self.driver.maximize_window()
+
 
     def login(self):
+
         driver = self.driver
         time.sleep(self._PAUSE)
 
@@ -30,11 +34,25 @@ class SenderService:
         input_pass.send_keys(self.password)
 
         driver.find_element(By.XPATH, '//*[@id="index-auth-form"]/div[3]/form/button').click()
+        time.sleep(3)
+        driver.find_element(By.XPATH, '//*[@id="top-header"]/header/div[3]/div/a[1]').click()
+        time.sleep(5)
+
+
+
+
         time.sleep(500)
+
+
+
+
+
 
 
 Sender = SenderService('lali_pap30@ukr.net', 'Masya1')
 Sender.login()
+
+
 
 
 
