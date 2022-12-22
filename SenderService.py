@@ -82,9 +82,9 @@ class SenderService:
                     continue
 
 
-Sender = SenderService('lali_pap30@ukr.net', 'Masya1')
-Sender.login()
-Sender.scanning()
+# Sender = SenderService('lali_pap30@ukr.net', 'Masya1')
+# Sender.login()
+# Sender.scanning()
 
 
 
